@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Погода</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .main-content {
+            flex: 3;
+        }
+        .sidebar {
+            flex: 1;
+            margin-left: 40px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div id="userSession" style="display: none;" user-session="{{ user_session }}"></div>
+    <div class="container">
+        <div class="main-container">
+            <h1>Узнай погоду в любой точке мира!</h1>
+            <input type="text" id="inputField" placeholder="Введите город..."
+                   {% if city_history %}
+                        value="{{ city_history }}"
+                   {% endif %}
+            >
+            <div id="suggestions"></div>
+            <button id="sendButton">Send</button>
+            <p id="response"></p>
+        </div>
+        {% if requests_history %}
+            <div class="sidebar">
+                {% for request in requests_history %}
+                <li><a href="{{ url_for('index.index', c=request) }}">{{ request }}</a></li>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,4 @@
+.venv/
+infra/
+*.sqlite
+**/__pycache__/
